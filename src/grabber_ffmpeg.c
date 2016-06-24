@@ -45,7 +45,7 @@ static const metadata_plist_t ffmpeg_pl[] = {
 
 
 static const char *
-grabber_ffmpeg_codec_name (enum CodecID id)
+grabber_ffmpeg_codec_name (enum AVCodecID id)
 {
   AVCodec *avc = NULL;
 
@@ -64,7 +64,7 @@ grabber_ffmpeg_properties_get (grabber_ffmpeg_t *ffmpeg,
   unsigned int i;
   unsigned int audio_streams = 0, video_streams = 0, sub_streams = 0;
 
-  res = av_find_stream_info (ctx);
+  res = avformat_find_stream_info (ctx, NULL);
   if (res < 0)
   {
     vh_log (VALHALLA_MSG_VERBOSE,
@@ -214,7 +214,7 @@ grabber_ffmpeg_grab (void *priv, file_data_t *data)
   res = grabber_ffmpeg_properties_get (ffmpeg, ctx, data);
   /* TODO: res = grabber_ffmpeg_snapshot (ctx, data, pos); */
 
-  av_close_input_file (ctx);
+  avformat_close_input (ctx);
   return res;
 }
 
