@@ -379,7 +379,10 @@ parser_metadata (parser_t *parser, file_data_t *data)
   data->file.type = parser_stream_info (ctx);
   data->meta_parser = parser_metadata_get (parser, ctx, data->file.path);
 
-  avformat_close_input (ctx);
+  // FIXME Some versions of ffmpeg might fail if name is null
+  ctx->iformat->name = malloc(sizeof(char));
+  if(ctx->iformat->name)
+	  avformat_close_input (&ctx);
 }
 
 static void *

@@ -214,7 +214,7 @@ grabber_ffmpeg_grab (void *priv, file_data_t *data)
   res = grabber_ffmpeg_properties_get (ffmpeg, ctx, data);
   /* TODO: res = grabber_ffmpeg_snapshot (ctx, data, pos); */
 
-  avformat_close_input (ctx);
+  avformat_close_input (&ctx);
   return res;
 }
 
